@@ -14,7 +14,7 @@ Install the MLFlow environment prior to running the experiment. For starting ins
 
 ## Running the experiment
 
-The main experiment is in the experiments/exp_main folder.
+The main experiment is in the 'experiments' folder. The part with homogeneous agents is in exp_homogen folder, and the one with heterogenous agents setup is in the exp_heterogen folder.
 
 Run the experiment.py file to run the simulation and save data to MLFlow.
 

@@ -5,7 +5,6 @@ METRIC_KEYS = ["density", "centralization", "avg_clustering", "largest_cc_frac",
 
 
 def compute_metrics(G: nx.Graph, N: int) -> dict:
-    
     density = nx.density(G) # Density of the network
 
     degrees = [d for _, d in G.degree()]
@@ -49,7 +48,7 @@ def config_distance(m_a: dict, m_b: dict) -> float:
 
 
 def er_average_metrics(density: float, N: int, n_iters: int) -> dict:
-    """Average metrics over n_iters ER(N, density) graphs with fixed seeds"""
+    """Average metrics over n_iters ER(N, density) graphs with fixed seeds for reproducibility."""
     totals = {k: 0.0 for k in METRIC_KEYS}
     for i in range(n_iters):
         G_er = nx.erdos_renyi_graph(N, density, seed=i)
