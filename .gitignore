@@ -1,0 +1,7 @@
+# Python cache
+src/__pycache__/
+__pycache__/
+
+#MLFlow files
+mlflow.db
+mlartifacts
