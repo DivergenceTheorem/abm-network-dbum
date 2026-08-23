@@ -26,7 +26,7 @@ MAX_STEPS_MULT  = 20
 N_SEEDS  = 100
 ER_ITERS = 100
 
-param_grid_n       = list(range(10, 110, 10))          # [10, 20, ..., 100]
+param_grid_n       = list(range(10, 90, 10))          # [10, 20, ..., 80]
 param_grid_delta   = [0.95, 0.65, 0.35]
 param_grid_cost    = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
 param_grid_radius  = [3, 5, 8, 10]
@@ -145,7 +145,7 @@ for run_idx, (n, delta, c, radius, add_prob) in enumerate(param_grid):
             "er_iters": ER_ITERS,
         })
 
-        # Analytically empty: no simulation needed
+        # Analytic empty: no simulation needed
         if delta <= c:
             empty_G = nx.Graph()
             empty_G.add_nodes_from(range(n))
@@ -158,8 +158,10 @@ for run_idx, (n, delta, c, radius, add_prob) in enumerate(param_grid):
                 log[f"std_{k}"]   = 0.0
                 log[f"ci95_{k}"]  = 0.0
             for name, bench in benchmarks.items():
-                log[f"g_dist_{name}"]  = config_distance(empty_metrics, bench)
-                log[f"er_dist_{name}"] = config_distance(er_metrics, bench)
+                log[f"g_dist_mean_{name}"] = config_distance(empty_metrics, bench)
+                log[f"g_dist_std_{name}"]  = 0.0
+                log[f"g_dist_ci95_{name}"] = 0.0
+                log[f"er_dist_mean_{name}"] = config_distance(er_metrics, bench)
             log["pairwise_stable_frac"] = 1.0
             log["mean_steps"]           = 0.0
             log["analytic_empty"]       = 1.0
@@ -192,7 +194,7 @@ for run_idx, (n, delta, c, radius, add_prob) in enumerate(param_grid):
             seed_ps.append(ps)
             seed_steps.append(steps)
 
-        # Aggregate metrics over seed runs
+        # Aggregate
         log = {}
         for k in METRIC_KEYS:
             vals = np.array([m[k] for m in seed_metrics])
